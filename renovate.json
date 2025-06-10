@@ -1,31 +1,43 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      "config:recommended",
-      "regexManagers:dockerfileVersions"
-    ],
-    "timezone": "America/Los_Angeles",
-    "forkProcessing": "enabled",
-    "assignees": ["allenporter"],
-    "packageRules": [
-      {
-        "description": "Minor updates are automatic",
-        "automerge": true,
-        "automergeType": "branch",
-        "matchUpdateTypes": ["minor", "patch"]
-      }
-    ],
-    "regexManagers": [
-      {
-        "fileMatch": [".+\\.yaml$"],
-        "matchStrings": [
-          "# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s.+?_version: (?<currentValue>.+?)\\s"
-        ],
-        "extractVersionTemplate": "^v?(?<version>.*)$"
-      }
-    ],
-    "pip_requirements": {
-      "fileMatch": ["requirements_dev.txt"]
-    },
-    "pre-commit": {"enabled": true}
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "customManagers:dockerfileVersions"
+  ],
+  "timezone": "America/Los_Angeles",
+  "forkProcessing": "enabled",
+  "assignees": [
+    "allenporter"
+  ],
+  "packageRules": [
+    {
+      "description": "Minor updates are automatic",
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/.+\\.yaml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>[^\\s]+?)(?: (lookupName|packageName)=(?<packageName>[^\\s]+?))?(?: versioning=(?<versioning>[^\\s]+?))?(?: registryUrl=(?<registryUrl>[^\\s]+?))?\\s.+?_version: (?<currentValue>.+?)\\s"
+      ],
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ],
+  "pip_requirements": {
+    "managerFilePatterns": [
+      "/requirements_dev.txt/"
+    ]
+  },
+  "pre-commit": {
+    "enabled": true
   }
+}
